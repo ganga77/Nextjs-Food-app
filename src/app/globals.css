@@ -4,6 +4,7 @@
 
 input[type="email"],
 input[type="password"],
+input[type="tel"],
 input[type="text"] {
     @apply block w-full my-4 rounded-xl;
     @apply border p-2 border-gray-300 bg-gray-100;
@@ -12,7 +13,7 @@ input[type="text"] {
 input[type="email"]:disabled,
 input[type="password"]:disabled,
 input[type="text"]:disabled {
-    @apply bg-gray-700
+    @apply bg-gray-100 cursor-not-allowed border-0 text-gray-100
 } 
 
 button{
@@ -22,4 +23,12 @@ button{
 
 button[type="submit"], .submit{
     @apply border-0 bg-primary text-white
+}
+
+div.tabs > * {
+    @apply bg-gray-300 text-gray-700 rounded-full py-2 px-4
+}
+
+div.tabs > *.active {
+    @apply bg-primary text-white
 }

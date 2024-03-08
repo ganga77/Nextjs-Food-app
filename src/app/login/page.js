@@ -13,7 +13,7 @@ const [loginInProgress, setLoginInProgress] = useState(false)
     
     
 
-    await signIn('credentials', {email, password}) 
+    await signIn('credentials', {email, password}) // this will go to api/auth
     setLoginInProgress(true);
     }
 
@@ -30,7 +30,8 @@ const [loginInProgress, setLoginInProgress] = useState(false)
                 <div className="my-4 text-center text-gray-500">
                     or login with a provider
                 </div>
-                <button className="flex gap-4 justify-center">
+                <button onClick={()=>signIn('google', {redirect:'/'})}
+                className="flex gap-4 justify-center">
                     <Image src={'/google.png'} alt={"Google logo"} width={24} height={24}/>
                     Login with Google</button>
                    
