@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import UserTabs from "@/components/layout/UserTabs";
+import Image from "next/image";
 
 export default function Profile() {
     const session = useSession();
@@ -74,12 +75,54 @@ export default function Profile() {
         }
     }
 
+    async function handleFileChange(ev){
+        console.log(ev)
+        const files = ev.target.files;
+        if(files?.length === 1){
+            const data = new FormData;
+            data.set('file', files[0]);
+
+            const res = await fetch('http://localhost:3000/api/upload', {
+                method: 'POST',
+                body: data,
+
+            })
+
+            if (res.ok) {
+
+                console.log('Image Updated')
+                
+
+            } else {
+                console.log('Image Updation Failed')
+
+            }
+           
+        }
+
+
+    }
+
+    
     return (
         <section className="mt-8">
             <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
             {admin && (
                 <UserTabs />
             )}
+             <div className="flex gap-4 items-center"> 
+            <div className="p-2 rounded-lg relative">
+            
+            {/* <Image className="rounded-lg w-full h-full mb-1" src={'/session.data.user.name'} alt={'user image'} width={250}
+            height={250} /> */}
+        
+        <label>
+            <input type="file" className="hidden" onChange={handleFileChange} />
+            <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">Edit</span>
+
+        </label>
+            </div>
+            </div>
             <form className="max-w-ws mx-auto border" onSubmit={handleProfileUpdate}>
                 <div>
                     <input type="text" value={userName} onChange={e => setUserName(e.target.value)} placeholder="First and Last Name" />
