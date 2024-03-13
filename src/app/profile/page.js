@@ -8,7 +8,7 @@ export default function Profile() {
     const session = useSession();
     const { status } = session;
 
-
+console.log(session)
 
     const [userName, setUserName] = useState('');
     const [phone, setphone] = useState('');
@@ -17,6 +17,7 @@ export default function Profile() {
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('')
     const [admin, setIsAdmin] = useState(false)
+    const [image, setImage] = useState('');
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -29,6 +30,7 @@ export default function Profile() {
                     setCity(data.city);
                     setCountry(data.country);
                     setIsAdmin(data.admin)
+                    setImage(data.image)
                 })
             })
         }
@@ -52,6 +54,7 @@ export default function Profile() {
                 method: 'PUT',
                 body: JSON.stringify({
                     name: userName,
+                    image,
                     streetAddress,
                     phone,
                     postalCode,
@@ -90,7 +93,8 @@ export default function Profile() {
 
             if (res.ok) {
 
-                console.log('Image Updated')
+                const link = await res.json();
+                setImage(link)
                 
 
             } else {
@@ -113,8 +117,13 @@ export default function Profile() {
              <div className="flex gap-4 items-center"> 
             <div className="p-2 rounded-lg relative">
             
-            {/* <Image className="rounded-lg w-full h-full mb-1" src={'/session.data.user.name'} alt={'user image'} width={250}
-            height={250} /> */}
+            {image && (
+                <Image className="rounded-lg w-full h-full mb-1" src={image} alt={'user image'} width={250}
+                height={250} />
+            )}
+            {!image && (
+                <div>Choose a pic</div>
+            )}
         
         <label>
             <input type="file" className="hidden" onChange={handleFileChange} />

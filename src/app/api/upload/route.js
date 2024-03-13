@@ -7,7 +7,7 @@ export async function POST(req){
     if(data.get('file')){
 
         const file = data.get('file');
-        console.log('we have file', data.get('file'))
+        //console.log('we have file', data.get('file'))
         const s3Client = new S3Client({
             region: 'us-east-2',
             credentials: {
