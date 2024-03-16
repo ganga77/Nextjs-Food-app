@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react";
 import UserTabs from "@/components/layout/UserTabs";
-import Image from "next/image";
+import EditableImage from '../../components/layout/EditableImage'
 
 export default function Profile() {
     const session = useSession();
@@ -78,34 +78,7 @@ console.log(session)
         }
     }
 
-    async function handleFileChange(ev){
-        console.log(ev)
-        const files = ev.target.files;
-        if(files?.length === 1){
-            const data = new FormData;
-            data.set('file', files[0]);
 
-            const res = await fetch('http://localhost:3000/api/upload', {
-                method: 'POST',
-                body: data,
-
-            })
-
-            if (res.ok) {
-
-                const link = await res.json();
-                setImage(link)
-                
-
-            } else {
-                console.log('Image Updation Failed')
-
-            }
-           
-        }
-
-
-    }
 
     
     return (
@@ -116,20 +89,8 @@ console.log(session)
             )}
              <div className="flex gap-4 items-center"> 
             <div className="p-2 rounded-lg relative">
+            <EditableImage link={image} setLink={setImage}/>
             
-            {image && (
-                <Image className="rounded-lg w-full h-full mb-1" src={image} alt={'user image'} width={250}
-                height={250} />
-            )}
-            {!image && (
-                <div>Choose a pic</div>
-            )}
-        
-        <label>
-            <input type="file" className="hidden" onChange={handleFileChange} />
-            <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">Edit</span>
-
-        </label>
             </div>
             </div>
             <form className="max-w-ws mx-auto border" onSubmit={handleProfileUpdate}>

@@ -3,7 +3,8 @@ import {Schema, model, models,} from 'mongoose'
 const MenuItemsSchema = new Schema({
     name: {type:String, required: true},
     description: {type: String},
-    basePrice: {type: Number}
+    basePrice: {type: Number},
+    image: {type: String}
 }, {timestamps: true})
 
 

@@ -1,74 +1,63 @@
 'use client'
 import UserTabs from "@/components/layout/UserTabs";
 import useProfile from "@/components/useProfile";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+export default function MenuItems() {
 
 
-export default function MenuItems(){
-    
+    const { loading, data } = useProfile();
+    const [menuItems, setMenuItems] = useState([])
 
-    const {loading, data} = useProfile();
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [basePrice, setBasePrice] = useState(0);
+    useEffect(() => {
+        fetchMenuItems();
+    }, [])
 
-    async function handleFormSubmit(ev){
-        ev.preventDefault();
-        const res = await fetch('http://localhost:3000/api/menu-items', {
-            method: 'POST',
-            body: JSON.stringify({
-                name, description, basePrice
-            }),
-            headers: {'Content-Type': 'application/json'}
+    function fetchMenuItems() {
+        fetch('http://localhost:3000/api/menu-items').then(response => {
+            response.json().then(data => {
+                setMenuItems(data);
+            })
         })
-
-        if(res.ok){
-            const form = ev.target;
-            form.reset();
-            console.log('Items Created')
-            
-        }else{
-            console.log('Item Registration Failed')
-            
-        }
     }
 
-    if(loading){
+
+    if (loading) {
         return "Loading..."
     }
 
-    if(!data.admin){
+    if (!data.admin) {
         return "Not an admin..."
     }
 
     return (
-        <section className="mt-8 max-w-md mx-auto">
+        <section className="mt-8 max-w-ms mx-auto">
             <UserTabs />
-            <form  onSubmit={handleFormSubmit} className="mt-8">
-                <div className="flex items-start gap-4">
-                    <div>
-                        image
+            <div className="mt-8">
+                <Link
+                    className="button flex"
+                    href={'/menu-items/new'}>
+                    <span>Create a new menu item</span>
+                </Link>
+                <div>
+                    <h2 className="text-sm text-gray-500 mt-8">Edit Menu Item:</h2>
+                    <div className="grid grid-cols-3 gap-2">
+                        {menuItems?.length > 0 && menuItems.map(item => (
+                            <Link href={'/menu-items/edit/' + item._id} className="bg-gray-200 rounded-lg p-4">
+                                <div className="w-24 h-24 flex items-center justify-center">
+                                    <Image className="rounded-md" src={item.image} alt="item_image" width={200} height={200} objectFit="cover" />
+                                </div>
+                                <div className="text-center">
+                                    {item.name}
+                                </div>
+                            </Link>
+                        ))}
                     </div>
-                    <div className="grow">
-                        <label>Menu Item Name</label>
-                        <input type="text"
-                        value={name}
-                        onChange={ev =>setName(ev.target.value)}/>
-                        <label>Description</label>
-                        <input  type="text"
-                        value={description}
-                        onChange={ev =>setDescription(ev.target.value)}/>
-                        <label>Base Price</label>
-                        <input type="text"
-                        value={basePrice}
-                        onChange={ev =>setBasePrice(ev.target.value)}/>
-                    </div>
-                    <div>
-                        <button className="mb-2">Create</button>
-                    </div>
+
+
                 </div>
-            </form>
-            
+            </div>
         </section>
     )
 }
