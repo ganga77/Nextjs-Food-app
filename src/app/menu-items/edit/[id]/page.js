@@ -4,7 +4,7 @@ import UserTabs from "@/components/layout/UserTabs";
 import EditableImage from "@/components/layout/EditableImage";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
+import MenuItemPriceProps from '../../../../components/layout/menuItemsPriceProps'
 export default function EditItem() {
     const { id } = useParams();
 
@@ -13,6 +13,8 @@ export default function EditItem() {
     const [basePrice, setBasePrice] = useState(0);
     const [image, setImage] = useState('');
     const [sizes, setSizes] = useState([]); // This state will be used for adding and editin sizes
+    const [extraIngredientsPrices, setExtraIngredientPrices] = useState([]);
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         fetchMenuItems();
@@ -27,16 +29,26 @@ export default function EditItem() {
                 setImage(foundItem.image)
                 setDescription(foundItem.description)
                 setBasePrice(foundItem.basePrice)
+                setSizes(foundItem?.sizes)
+                setExtraIngredientPrices(foundItem?.extraIngredientsPrices);
             })
         })
     }
+
+    useEffect(() =>{
+        fetch('http://localhost:3000/api/categories').then(response =>{
+            response.json().then(data => {
+                setCategories(data)
+            })
+        })
+    }, [])
 
     async function handleFormSubmit(ev) {
         ev.preventDefault();
         const res = await fetch('http://localhost:3000/api/menu-items', {
             method: 'PUT',
             body: JSON.stringify({
-                name, description, basePrice, image, _id: id
+                name, description, basePrice, image, _id: id, sizes, extraIngredientsPrices
             }),
             headers: { 'Content-Type': 'application/json' }
         })
@@ -44,7 +56,7 @@ export default function EditItem() {
         if (res.ok) {
             const form = ev.target;
             form.reset();
-            console.log('Items Updated')
+            
 
         } else {
             console.log('Item Updation Failed')
@@ -52,25 +64,19 @@ export default function EditItem() {
         }
     }
 
+    async function removeMenuItem(id){
+        const res = await fetch('http://localhost:3000/api/menu-items?_id='+ id, {
+            method: 'DELETE'
+        });
 
-    function addSize() {
-        setSizes(oldSizes => {
-            return [...oldSizes, { name: '', price: 0 }]
-        })
+        if(res.ok){
+            console.log('Item Deleted')
+            fetchMenuItems();
+        }else{
+            console.log('Item failed to delete')
+        }
     }
 
-    function editSizes(ev, index, prop){
-        const newValue = ev.target.value;
-        setSizes(prevSizes =>{
-            const newSizes = [...prevSizes]
-            newSizes[index][prop] = newValue
-            return newSizes;
-        })
-    }
-
-    function removeItem(index){
-        setSizes(prevSize => prevSize.filter((value, i) => i !== index))
-    }
 
     return (
         <section className="mt-8 max-w-md mx-auto">
@@ -80,6 +86,7 @@ export default function EditItem() {
                     <span>Show all menu items</span>
                 </Link>
                 {name}
+                
             </div>
             <form onSubmit={handleFormSubmit} className="mt-8">
                 <div className="flex items-start gap-4">
@@ -95,44 +102,38 @@ export default function EditItem() {
                         <input type="text"
                             value={description}
                             onChange={ev => setDescription(ev.target.value)} />
+                            <label>Category</label>
+                            <select>
+                                {categories?.length > 0 && categories.map(c => (
+                                    <option value={c._id}>{c.name}</option>
+                                ))}
+                            </select>
                         <label>Base Price</label>
                         <input type="text"
                             value={basePrice}
                             onChange={ev => setBasePrice(ev.target.value)} />
-                        <div className="bg-gray-200 p-2 rounded-md mb-2">
-                            <label>Sizes</label>
-                            {sizes?.length > 0 && sizes.map((size, index) => (
-                                <div className="flex gap-2">
-                                    <div>
-                                        <label>Size name</label>
-                                        <input type="text" value={size.name} placeholder="Size name"
-                                        onChange = {ev => editSizes(ev, index, 'name')} />
+                        
 
-
-                                    </div>
-                                    <div>
-                                        <label>Extra Price</label>
-                                        <input type="number" value={size.price} placeholder="Price" 
-                                        onChange={ev=> editSizes(ev, index, 'price')}/>
-                                    </div>
-                                    <div>
-                                        <button type="button" className="bg-white mt-2"
-                                        onClick={()=>removeItem(index)}>X</button>
-                                        </div>
-                                </div>
-                            ))}
-                            <button className="bg-white" onClick={addSize}>Add size</button>
-                        </div>
                     </div>
+                    
 
 
                 </div>
+                <MenuItemPriceProps propName={"Sizes"} propLabel={"Add Size"} props={sizes} setProps={setSizes}/>
+                <MenuItemPriceProps propName={"Extra Toppings"} propLabel={"Add Toppings Price"} props={extraIngredientsPrices} setProps={setExtraIngredientPrices}/>
                 <div>
-                    <button className="mb-2"
+                    <button className="bg-primary text-white mb-2 hover:bg-yellow-500"
 
                     >Edit</button>
                 </div>
+                
             </form>
+            <div>
+                    <button className="bg-primary text-white mb-2 hover:bg-yellow-500"
+                    onClick={()=>removeMenuItem(id)}
+
+                    >Delete</button>
+                </div>
 
         </section>
     )
