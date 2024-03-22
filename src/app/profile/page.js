@@ -18,6 +18,7 @@ console.log(session)
     const [country, setCountry] = useState('')
     const [admin, setIsAdmin] = useState(false)
     const [image, setImage] = useState('');
+    
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -49,6 +50,7 @@ console.log(session)
 
     async function handleProfileUpdate(ev) {
         ev.preventDefault();
+        // setIsAdmin(prev => !prev)
         try {
             const res = await fetch('http://localhost:3000/api/profile', {
                 method: 'PUT',
@@ -59,7 +61,8 @@ console.log(session)
                     phone,
                     postalCode,
                     city,
-                    country
+                    country,
+                    admin
                 }),
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -104,6 +107,13 @@ console.log(session)
                         <input type="text" placeholder={"City"} value={city} onChange={ev => setCity(ev.target.value)} />
                     </div>
                     <input type="text" placeholder={"country"} value={country} onChange={ev =>setCountry(ev.target.value)}/>
+                    {JSON.stringify(admin)}
+                    <label>
+                        <input type="checkbox"
+                        checked={admin}
+                        onChange={ev =>setIsAdmin(ev.target.checked)}/>
+                        Admin
+                    </label>
                     <button type="submit" className="bg-primary text-white rounded-full ">Submit</button>
                 </div>
             </form>

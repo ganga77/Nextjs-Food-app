@@ -14,6 +14,7 @@ export default function EditItem() {
     const [image, setImage] = useState('');
     const [sizes, setSizes] = useState([]); // This state will be used for adding and editin sizes
     const [extraIngredientsPrices, setExtraIngredientPrices] = useState([]);
+    const [category, setCategory] = useState('65fcd2d46face88cd3ceb37d')
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function EditItem() {
         const res = await fetch('http://localhost:3000/api/menu-items', {
             method: 'PUT',
             body: JSON.stringify({
-                name, description, basePrice, image, _id: id, sizes, extraIngredientsPrices
+                name, description, basePrice, image, _id: id, sizes, extraIngredientsPrices, category
             }),
             headers: { 'Content-Type': 'application/json' }
         })
@@ -102,12 +103,14 @@ export default function EditItem() {
                         <input type="text"
                             value={description}
                             onChange={ev => setDescription(ev.target.value)} />
+
                             <label>Category</label>
-                            <select>
+                            <select value={category} onChange={ev => setCategory(ev.target.value)}>
                                 {categories?.length > 0 && categories.map(c => (
                                     <option value={c._id}>{c.name}</option>
                                 ))}
                             </select>
+                            
                         <label>Base Price</label>
                         <input type="text"
                             value={basePrice}

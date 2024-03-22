@@ -9,14 +9,13 @@ export async function PUT(req) {
 
     await mongoose.connect(process.env.MONGO_URL);
     const data = await req.json();
-    console.log('Data is:')
-    console.log(data)
+    
     const {name, image, ...otherUserInfo} = data;
     const session = await getServerSession(authOptions)
     const email = session?.user?.email;
 
 
-    
+   // Here we are updating name and image only to the User. 
 const update = {}
 
 if('name' in data){
