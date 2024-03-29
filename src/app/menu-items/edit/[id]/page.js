@@ -10,7 +10,7 @@ export default function EditItem() {
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [basePrice, setBasePrice] = useState(0);
+   const [basePrice, setBasePrice] = useState(0);
     const [image, setImage] = useState('');
     const [sizes, setSizes] = useState([]); // This state will be used for adding and editin sizes
     const [extraIngredientsPrices, setExtraIngredientPrices] = useState([]);
@@ -25,7 +25,7 @@ export default function EditItem() {
         fetch('http://localhost:3000/api/menu-items').then(response => {
             response.json().then(data => {
                 const foundItem = data.find(item => item._id === id);
-
+                console.log(foundItem)
                 setName(foundItem.name)
                 setImage(foundItem.image)
                 setDescription(foundItem.description)
@@ -49,7 +49,10 @@ export default function EditItem() {
         const res = await fetch('http://localhost:3000/api/menu-items', {
             method: 'PUT',
             body: JSON.stringify({
-                name, description, basePrice, image, _id: id, sizes, extraIngredientsPrices, category
+                name, 
+                description, 
+                basePrice, 
+                image, _id: id, sizes, extraIngredientsPrices, category
             }),
             headers: { 'Content-Type': 'application/json' }
         })

@@ -8,7 +8,6 @@ export default function Profile() {
     const session = useSession();
     const { status } = session;
 
-console.log(session)
 
     const [userName, setUserName] = useState('');
     const [phone, setphone] = useState('');

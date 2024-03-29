@@ -5,6 +5,26 @@ import { useState, useEffect } from "react";
 
 export const CartContext = createContext({});
 
+
+// Calculating total price of the cart
+export function cartProductPrice(cartProduct){
+    let price = 0;
+    if(cartProduct.size){
+        price+=cartProduct.size.price
+    }
+
+    if(cartProduct.extras?.length > 0){
+        for (const extra of cartProduct.extras){
+            price+=extra.price
+        }
+    }
+
+    return price
+}
+
+
+
+
 //This is the component for loggedin sessions and maintaining cart
 export default function AppContext({ children }) {
     const [cartProducts, setCartProducts] = useState([]);
@@ -53,10 +73,13 @@ export default function AppContext({ children }) {
         })
     }
 
+    
+    
+
     return (
         <SessionProvider>
 
-            <CartContext.Provider value={{ cartProducts, setCartProducts, addToCart, removeCartProduct, clearCart }}>
+            <CartContext.Provider value={{ cartProducts, setCartProducts, addToCart, removeCartProduct, clearCart, cartProductPrice }}>
                 {children}
             </CartContext.Provider>
         </SessionProvider>
