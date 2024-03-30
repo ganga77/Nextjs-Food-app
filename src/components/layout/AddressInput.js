@@ -24,7 +24,7 @@ export default function AddressInput({totalPrice, cartProducts}) {
 
 useEffect(() => {
     const extractedNames = cartProducts.map(product => {
-        const extraIngredients = product.extraIngredientsPrices.map(ingredient => ({
+        const extraIngredients = product.extras.map(ingredient => ({
             name: ingredient.name,
             price: ingredient.price
         }));

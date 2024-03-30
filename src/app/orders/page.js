@@ -1,16 +1,20 @@
 'use client'
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Orders() {
+    const { data: session } = useSession();
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/orders')
             .then(response => response.json())
             .then(data => {
-                setOrders(data);
+                // Filter orders based on the user's email stored in the session
+                const userOrders = data.filter(order => order.email === session?.user?.email);
+                setOrders(userOrders);
             });
-    }, []);
+    }, [session]);
 
     return (
         <div className="bg-gray-100 p-4">

@@ -27,18 +27,18 @@ export default function MenuItem(menuItem) {
     }
 
     // This function is for extra Ingredientes (checkboxes)
-    function handleExtraThingClick(ev, extraThing){
+    function handleExtraThingClick(ev, extraThing) {
         const checked = ev.target.checked;
-        if(checked){
-            setSelectExtraThing(prevThing => [...prevThing, extraThing])
-            console.log(selectExtraThing);
-        }else{
-            setSelectExtraThing(prevThing => {
-               return prevThing.filter(e => e.name !== extraThing.name)
-            })
+        if (checked) {
+            setSelectExtraThing(prevThings => [...prevThings, extraThing]);
+        } else {
+            setSelectExtraThing(prevThings =>
+                prevThings.filter(thing => thing.name !== extraThing.name)
+            );
         }
-
+        
     }
+    
 
     let selectedPrice = 0;
     if(selectedSize){
