@@ -2,6 +2,7 @@
 import SectionHeaders from "@/components/layout/SectionHeaders"
 import MenuItem from "@/components/layout/menu/MenuItem"
 import { useState, useEffect } from "react"
+import Link from "next/link"
 export default function Menu(){
     const [categories, setCategories] = useState([])
     const [menuItems, setMenuItems] = useState([])
@@ -16,7 +17,16 @@ export default function Menu(){
         fetch('http://localhost:3000/api/menu-items')
         .then(res => res.json()).then(items => setMenuItems(items))
     }, [])
+
+    console.log(menuItems)
     return (
+        <>
+        <section>
+        <div className="text-center animate-blink text-primary">
+                <Link href={'/filter'}>Filter Cars by Price</Link>
+
+            </div>
+        </section>
         <section className="mt-8">
             {categories?.length > 0 && categories.map(c => (
                 <div>
@@ -31,5 +41,7 @@ export default function Menu(){
                 </div>
             ))}
         </section>
+        </>
+        
     )
 }

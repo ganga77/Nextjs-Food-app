@@ -31,7 +31,7 @@ console.log(cartProducts)
             </div>
             <div>
                 
-                Your cart has: {items} items
+                Your Test Drive Bookings has {items} cars
             </div>
             <div className="mt-4 grid gap-4 grid-cols-2">
                 <div>

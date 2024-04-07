@@ -22,20 +22,20 @@ export default function AddressInput({totalPrice, cartProducts}) {
 
 
 
-useEffect(() => {
-    const extractedNames = cartProducts.map(product => {
-        const extraIngredients = product.extras.map(ingredient => ({
-            name: ingredient.name,
-            price: ingredient.price
-        }));
-        return {
-            name: product.name,
-            size: product.size.name,
-            extraIngredients: extraIngredients
-        };
-    });
-    setOrderNames(extractedNames);
-}, [cartProducts]);
+// useEffect(() => {
+//     const extractedNames = cartProducts.map(product => {
+//         const extraIngredients = product.extras.map(ingredient => ({
+//             name: ingredient.name,
+//             price: ingredient.price
+//         }));
+//         return {
+//             name: product.name,
+//             size: product.size.name,
+//             extraIngredients: extraIngredients
+//         };
+//     });
+//     setOrderNames(extractedNames);
+// }, [cartProducts]);
 
 
 

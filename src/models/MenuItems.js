@@ -2,10 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema, model, models } = mongoose;
 
-const ExtraPriceSchema = new Schema({
-    name: String,
-    price: Number
-});
+
 
 const MenuItemsSchema = new Schema({
     name: { type: String, required: true },
@@ -13,8 +10,11 @@ const MenuItemsSchema = new Schema({
     category: { type: mongoose.Types.ObjectId },
     basePrice: { type: Number },
     image: { type: String },
-    sizes: { type: [ExtraPriceSchema] },
-    extraIngredientsPrices: { type: [ExtraPriceSchema] }
+    model: {type: String},
+    year: {type: String},
+    driven: {type: String},
+    vin: {type: String},
+    color: {type: String}
 
 }, { timestamps: true });
 

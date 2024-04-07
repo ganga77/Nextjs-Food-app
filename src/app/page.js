@@ -10,7 +10,7 @@ export default function Home() {
     <HomeMenu />
     <section className="text-center my-16">
       {/* <SectionHeaders mainHeader={"Our Best Sellers"} subHeader={"Check Out"}/> */}
-      <p className="max-w-2xl mx-auto mt-4 text-gray-500">Lorem Ipsum</p>
+      <p className="max-w-2xl mx-auto mt-4 text-gray-500"></p>
     </section>
       </>
   );

@@ -31,6 +31,8 @@ export default function MenuItems() {
         return "Not an admin..."
     }
 
+    console.log('Demo cars test:', menuItems)
+
     return (
         <section className="mt-8 max-w-ms mx-auto">
             <UserTabs />
@@ -38,15 +40,16 @@ export default function MenuItems() {
                 <Link
                     className="button flex"
                     href={'/menu-items/new'}>
-                    <span>Create a new menu item</span>
+                    <span>Create your own car</span>
                 </Link>
                 <div>
-                    <h2 className="text-sm text-gray-500 mt-8">Edit Menu Item:</h2>
+                    <h2 className="text-sm text-gray-500 mt-8">Edit Car</h2>
                     <div className="grid grid-cols-3 gap-2">
                         {menuItems?.length > 0 && menuItems.map(item => (
                             <Link href={'/menu-items/edit/' + item._id} className="bg-gray-200 rounded-lg p-4">
                                 <div className="w-24 h-24 flex items-center justify-center">
                                     <Image className="rounded-md" src={item.image} alt="item_image" width={200} height={200} objectFit="cover" />
+                                    
                                 </div>
                                 <div className="text-center">
                                     {item.name}
