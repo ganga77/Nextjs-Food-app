@@ -9,35 +9,35 @@ export default function MenuItem(menuItem) {
     const { name, description, basePrice, image, model, year, color, driven, vin } = menuItem
 
     const { addToCart } = useContext(CartContext)
-   
-    const [showPopUp, setShowPopUp] = useState(false)
-   
 
+    const [showPopUp, setShowPopUp] = useState(false)
+
+    const bookingPrice = basePrice/200
 
 
     function handleAddToCartButtonClick() {
 
         if (!showPopUp) {
             setShowPopUp(true)
-            
+
             return;
         }
 
 
 
         addToCart(menuItem)
-       
-        
+
+
         setShowPopUp(false)
-        
+
 
     }
 
-    
+
 
     return (
         <>
-       
+
             {showPopUp && (
 
                 <div
@@ -57,14 +57,17 @@ export default function MenuItem(menuItem) {
 
                             />
                             <h2 className="text-lg font-bold text-center mb-2">{name}</h2>
-                            <p className="text-center text-gray-500 text-sm mb-2">About Car: {description}</p>
-                            <p className="text-center text-gray-500 text-sm mb-2">Model: {model}</p>
-                            <p className="text-center text-gray-500 text-sm mb-2">Year: {year}</p>
-                            <p className="text-center text-gray-500 text-sm mb-2">Color: {color}</p>
-                            <p className="text-center text-gray-500 text-sm mb-2">Price: {basePrice}</p>
+                            <p className="text-center text-gray-500 text-sm mb-2">
+    <span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>About Car: </span>{description}
+</p>
 
-<p className="text-center text-gray-500 text-sm mb-2">Kms Driven: {driven}km</p>
-<p className="text-center text-gray-500 text-sm mb-2">VIN#: {vin}</p>
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>Model: </span> {model}</p>
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>Year: </span>: {year}</p>
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>Color: </span>: {color}</p>
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>Price: </span>: ${basePrice}</p>
+
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>Driven: </span>: {driven}kms</p>
+                            <p className="text-center text-gray-500 text-sm mb-2"><span style={{ color: 'black', fontSize: '1.2rem', fontWeight: 'bold' }}>VIN#: </span>: {vin}</p>
                             {/* {extraIngredientsPrices?.length > 0 && (
                             <div className="py-2">
                                 <h3>Pick your toppings</h3>
@@ -80,13 +83,13 @@ export default function MenuItem(menuItem) {
                             </div>
                         )}
  */}
-                           <button className="bg-primary text-white"
-                         onClick={handleAddToCartButtonClick}
-                       >
-                            Book Test Drive for
+                            <button className="bg-primary text-white"
+                                onClick={handleAddToCartButtonClick}
+                            >
+                                Book Test Drive for ${bookingPrice}
                             </button>
 
-                        
+
 
 
 

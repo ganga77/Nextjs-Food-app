@@ -8,7 +8,7 @@ export default function NewMenuItem() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [basePrice, setBasePrice] = useState(0);
-    const [image, setImage] = useState([]);
+    const [image, setImage] = useState('');
     const [model, setModel] = useState('')
     const [year, setYear] = useState('')
     const [color, setColor] = useState('')
@@ -84,6 +84,7 @@ export default function NewMenuItem() {
                         <input type="text"
                             value={vin}
                             onChange={ev => setVin(ev.target.value)} />
+                            
 
                         <label>Base Price</label>
                         <input type="number"

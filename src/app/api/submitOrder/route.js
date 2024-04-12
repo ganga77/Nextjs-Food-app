@@ -5,10 +5,9 @@ import { NextResponse } from 'next/server';
 export async function POST(req) {
     const { name, email, phone, streetAddress, postalCode, city, country, 
         orderNames, 
-        totalPrice } = await req.json();
+         } = await req.json();
 console.log(name, email, streetAddress, postalCode, city, country, 
-    orderNames, 
-    totalPrice
+    orderNames
     )
     try {
         await mongoose.connect(process.env.MONGO_URL);
@@ -16,7 +15,7 @@ console.log(name, email, streetAddress, postalCode, city, country,
 
         const orderSubmitted = await Order.create({name, email, phone, streetAddress, postalCode, city, country, 
             orderNames, 
-            totalPrice});
+            });
         console.log('Order Sumitted');
         return Response.json(orderSubmitted);
 

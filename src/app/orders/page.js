@@ -24,12 +24,15 @@ export default function Orders() {
                         <div key={od._id}>
                             <h3 className="text-lg font-bold">Order Number: {od._id}</h3>
                             <h4 className="text-lg font-semibold">Order Name: {od.name}</h4>
-                            <h4 className="text-lg font-semibold">Toppings: </h4>
+                            {/* <h4 className="text-lg font-semibold">Toppings: </h4>
                             {od.extraIngredients.map((o, idx) => (
                                 <div key={o._id} className="pl-4">
                                     {o.name}
                                 </div>
-                            ))}
+                            ))} */}
+                            <h4 className="text-lg font-semibold">Car Model: {od.model}</h4>
+                            <h4 className="text-lg font-semibold">Car Color: {od.color}</h4>
+                            <h4 className="text-lg font-semibold">Car VIN#: {od.vin}</h4>
                         </div>
                     ))}
                 </div>

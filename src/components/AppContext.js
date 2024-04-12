@@ -7,16 +7,25 @@ export const CartContext = createContext({});
 
 
 // Calculating total price of the cart
+// export function cartProductPrice(cartProduct){
+//     let price = 0;
+//     if(cartProduct.size){
+//         price+=cartProduct.size.price
+//     }
+
+//     if(cartProduct.extras?.length > 0){
+//         for (const extra of cartProduct.extras){
+//             price+=extra.price
+//         }
+//     }
+
+//     return price
+// }
+
 export function cartProductPrice(cartProduct){
     let price = 0;
-    if(cartProduct.size){
-        price+=cartProduct.size.price
-    }
-
-    if(cartProduct.extras?.length > 0){
-        for (const extra of cartProduct.extras){
-            price+=extra.price
-        }
+    if(cartProduct){
+        price+=(cartProduct.basePrice)/200
     }
 
     return price

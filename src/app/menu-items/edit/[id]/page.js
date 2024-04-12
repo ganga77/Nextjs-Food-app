@@ -58,7 +58,7 @@ export default function EditItem() {
                 name,
                 description,
                 basePrice,
-                image, _id: id,  category
+                image, _id: id, year, color, driven, vin, category
             }),
             headers: { 'Content-Type': 'application/json' }
         })

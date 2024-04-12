@@ -34,7 +34,7 @@ export default function Menu(){
                     <SectionHeaders subHeader={c.name}/>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4 mt-6 mb-8">
+                    <div className="grid grid-cols-4 gap-4 mt-6 mb-8">
                         {menuItems.filter(items => c._id === items.category).map(item => 
                             <MenuItem {...item}/>)}
                     </div>

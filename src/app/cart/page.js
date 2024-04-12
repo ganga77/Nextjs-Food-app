@@ -13,7 +13,7 @@ export default function Cart() {
     console.log(status)
     const { cartProducts, clearCart, removeCartProduct } = useContext(CartContext)
     
-console.log(cartProducts)
+console.log('Cart Products in cart:', {cartProducts})
     let totalPrice = 0;
     let items = 0;
     for (let prod of cartProducts){
@@ -37,7 +37,7 @@ console.log(cartProducts)
                 <div>
                     {cartProducts?.length === 0 && (
                         <div className="text-center animate-blink text-primary">
-                        No Products in the shopping cart. Explore Menu to order some pizza
+                        No bookings in the shopping cart. Explore cars from our showroom
                     </div>
                     )}
 
@@ -48,14 +48,14 @@ console.log(cartProducts)
                             </div>
                             <div>
                                 <h3>{product.name}</h3>
-                                {product.size && (
+                                {/* {product.size && (
                                     <div className="text-sm text-gray-500"> Size: <span>{product.size.name}</span></div>
                                 )}
                                 {product.extras?.length > 0 && (
                                     <div className="text-sm text-gray-500">{product.extras.map(extra => (<div>{extra.name} ${extra.price}</div>))}</div>
-                                )}
+                                )} */}
                             </div>
-                            <div className="text-lg font-semibold">{cartProductPrice(product)}</div>
+                            <div className="text-lg font-semibold">${cartProductPrice(product)}</div>
                             
                             <div>
                                 <button onClick={() =>removeCartProduct(index)}>Remove</button>

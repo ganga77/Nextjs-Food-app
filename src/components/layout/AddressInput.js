@@ -20,7 +20,7 @@ export default function AddressInput({totalPrice, cartProducts}) {
     const [orderNames, setOrderNames] = useState([]); 
     
 
-
+console.log('Cart Products final:', cartProducts)
 
 // useEffect(() => {
 //     const extractedNames = cartProducts.map(product => {
@@ -36,6 +36,20 @@ export default function AddressInput({totalPrice, cartProducts}) {
 //     });
 //     setOrderNames(extractedNames);
 // }, [cartProducts]);
+
+useEffect(() =>{
+    const extractedProducts = cartProducts.map(car =>{
+        return {
+            name: car.name,
+            model: car.model,
+            vin: car.vin,
+            color: car.color,
+            booking: car.basePrice/200
+        }
+    })
+
+    setOrderNames(extractedProducts)
+}, [cartProducts])
 
 
 
